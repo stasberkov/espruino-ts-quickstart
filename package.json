@@ -1,0 +1,23 @@
+{
+  "name": "espruino-ts-quickstart",
+  "version": "1.0.0",
+  "description": "Quickstart for Espruino using typescript and Visual Studio Code IDE",
+  "main": "app.js",
+  "repository": {
+    "url": "https://github.com/stasberkov/espruino-ts-quickstart"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stanislav Berkov",
+  "license": "ISC",
+  "dependencies": {
+    "espruino": "0.0.36",
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^3.2.3",
+    "js-yaml": "^3.10.0",
+    "lodash": "^4.17.4",
+    "typescript": "^2.6.2",
+    "@types/espruino": "^1.94.0"
+  }
+}

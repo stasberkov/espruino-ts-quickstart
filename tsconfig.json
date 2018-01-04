@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": [
+      "es2015",
+      "dom" // setInterval, console
+    ], 
+    "strict": true 
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}

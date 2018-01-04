@@ -1,0 +1,39 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "group": "build",
+            "type": "gulp",
+            "task": "build",
+            "problemMatcher": [
+                "$gulp-tsc"
+            ],
+            "presentation": {
+                "focus": true
+            }
+        },
+        {
+            "label": "send-to-espurino-console",
+            "group": "build",
+            "type": "gulp",
+            "task": "send-to-espurino-console",
+            "problemMatcher": [],
+            "presentation": {
+                "focus": true
+            }
+        },
+        {
+            "label": "espurino-console",
+            "group": "build",
+            "type": "gulp",
+            "task": "espruino-console",
+            "problemMatcher": [],
+            "presentation": {
+                "focus": true
+            }
+        }
+    ]
+}
