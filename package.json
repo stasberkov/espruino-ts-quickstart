@@ -12,12 +12,16 @@
   "author": "Stanislav Berkov",
   "license": "ISC",
   "dependencies": {
+    "@types/espruino": "^1.94.0",
+    "@types/node": "^14.0.19",
     "espruino": "0.0.36",
-    "gulp": "^3.9.1",
     "gulp-typescript": "^3.2.3",
     "js-yaml": "^3.10.0",
     "lodash": "^4.17.4",
-    "typescript": "^2.6.2",
-    "@types/espruino": "^1.94.0"
+    "speedtest-net": "^2.1.1",
+    "typescript": "^2.6.2"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2"
   }
 }

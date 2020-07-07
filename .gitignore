@@ -1,4 +1,7 @@
 dist
 node_modules
 app-config.user.yaml
-src/app-config.ts
+src
+.vscode/
+package-lock.json
+src/app.ts
