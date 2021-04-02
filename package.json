@@ -7,17 +7,19 @@
     "url": "https://github.com/stasberkov/espruino-ts-quickstart"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gulp build",
+    "send-to-espruino-console": "gulp send-to-espruino-console",
+    "espruino-console": "gulp espruino-console"
   },
   "author": "Stanislav Berkov",
   "license": "ISC",
   "dependencies": {
-    "espruino": "0.0.36",
-    "gulp": "^3.9.1",
-    "gulp-typescript": "^3.2.3",
-    "js-yaml": "^3.10.0",
-    "lodash": "^4.17.4",
-    "typescript": "^2.6.2",
-    "@types/espruino": "^1.94.0"
+    "@types/espruino": "^1.94",
+    "espruino": "^0.1",
+    "gulp": "^4.0",
+    "gulp-typescript": "^5.0",
+    "js-yaml": "^4.0",
+    "lodash": "^4.17",
+    "typescript": "^4.2"
   }
 }
