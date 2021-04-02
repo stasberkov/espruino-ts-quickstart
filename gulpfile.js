@@ -21,9 +21,8 @@ const userAppConfigFileName = "app-config.user.yaml";
 const espConsoleBeingWatchedFileName = "esp-console-input.js";
 const espConsoleBeingWatchedFilePath = path.join(distDir, espConsoleBeingWatchedFileName);
 
-gulp.task("build", ["prepare-for-espruino"]);
 
-gulp.task("prepare-for-espruino", ['compile-ts', 'content-to-dist'], (cb) => {
+function prepare_for_espruino(cb) {
     if (!fs.existsSync(appFilePath)) {
         cb("main app file does not exit " + appFilePath);
         return;
@@ -37,23 +36,23 @@ gulp.task("prepare-for-espruino", ['compile-ts', 'content-to-dist'], (cb) => {
         require.resolve("espruino/bin/espruino-cli"),
         ["--board", envConfig.board, appFileName, "-o", espReadyBundleFileName],
         { cwd: distDir });
-    buildproc.on('close', (code) => {
+    buildproc.on('close', () => {
         cb();
     });
-});
+}
 
-gulp.task("compile-ts", ["gen-config-ts"], function () {
+function compile_ts() {
     const tsResult = tsProject.src().pipe(tsProject());
     return tsResult.js.pipe(gulp.dest(distDir));
-});
+}
 
-gulp.task("content-to-dist", () => {
+function content_to_dist() {
     return gulp
         .src("src/**/*.js", { base: 'src' })
         .pipe(gulp.dest(distDir));
-});
+}
 
-gulp.task("send-to-espurino-console", (cb) => {
+function send_to_espruino_console(cb) {
     const content = fs.readFileSync(espReadyBundlePath);
     fs.writeFile(
         espConsoleBeingWatchedFilePath,
@@ -62,9 +61,9 @@ gulp.task("send-to-espurino-console", (cb) => {
             if (err) { throw err; }
             cb();
         });
-});
+}
 
-gulp.task("clear-espurino-watch-file", (cb) => {
+function clear_espruino_watch_file(cb) {
     fs.writeFile(
         espConsoleBeingWatchedFilePath,
         "",
@@ -72,19 +71,19 @@ gulp.task("clear-espurino-watch-file", (cb) => {
             if (err) { throw err; }
             cb();
         });
-});
+}
 
-gulp.task("espruino-console", ["clear-espurino-watch-file"], (cb) => {
+function espruino_console(cb) {
     const buildproc = fork(
         require.resolve("espruino/bin/espruino-cli"),
         ["--board", envConfig.board, "-b", envConfig.port_speed, "--port", envConfig.port, "-w", espConsoleBeingWatchedFileName],
         { cwd: distDir });
-    buildproc.on('close', (code) => {
+    buildproc.on('close', () => {
         cb();
     });
-});
+}
 
-gulp.task("gen-config-ts", (cb) => {
+function gen_config_ts(cb) {
     if (!fs.existsSync(userAppConfigFileName)) {
         const content = fs.readFileSync(appConfigFileName)
             .toString()
@@ -102,4 +101,20 @@ gulp.task("gen-config-ts", (cb) => {
     const resultConfigTsContent = `export default ${jsonString};`;
     fs.writeFileSync(path.join(srcDir, appConfigTsFileName), resultConfigTsContent);
     cb();
-});
+}
+
+gulp.task("gen-config-ts", gen_config_ts);
+
+gulp.task("compile-ts", gulp.series("gen-config-ts", compile_ts));
+
+gulp.task("content-to-dist", content_to_dist);
+
+gulp.task("prepare-for-espruino", gulp.series('compile-ts', 'content-to-dist', prepare_for_espruino));
+
+gulp.task("build", gulp.series("prepare-for-espruino"));
+
+gulp.task("send-to-espurino-console", send_to_espruino_console);
+
+gulp.task("clear-espurino-watch-file", clear_espruino_watch_file);
+
+gulp.task("espruino-console", gulp.series("clear-espurino-watch-file", espruino_console));
